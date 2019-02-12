@@ -6,7 +6,7 @@ class SearchInput extends Component {
   constructor() {
     super();
 
-    this.handleSearch = this.handleSerach.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleSearch(event) {

@@ -23,21 +23,27 @@ class App extends Component {
   }
 
   componentDidMount() {
+    // console.log(process.env);
     window.gapi.load('client:auth2', () => {
-      window.gapi.client.init({
-        'apiKey': process.env.GOOGLE_API_KEY,
-        'clientID': process.env.GOOGLE_CLIENT_ID,
-        'scope': 'https://www.googleapis.com/auth/youtube',
-        'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'],
-      })
-        .then(() => {
-          const gAuthInstance = window.gapi.auth2.getAuthInstance();
-          this.setState({ gAuthInstance });
+      setTimeout(() => {
+        window.gapi.client.init({
+          apiKey: process.env.GOOGLE_API_KEY,
+          clientId: process.env.GOOGLE_CLIENT_ID,
 
-          gAuthInstance.isSignedIn.listen(this.handleAuthorization);
-          this.handleAuthorization();
+          scope: 'https://www.googleapis.com/auth/youtube',
+          discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'],
         })
-        .catch(error => console.log(error));
+          .then(() => {
+            setTimeout(() => {
+              const gAuthInstance = window.gapi.auth2.getAuthInstance();
+              this.setState({ gAuthInstance });
+
+              gAuthInstance.isSignedIn.listen(this.handleAuthorization);
+              this.handleAuthorization();
+            }, 100);
+          })
+          .catch(error => console.log(error));
+      }, 100);
     });
   }
 
